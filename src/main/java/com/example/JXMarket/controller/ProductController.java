@@ -49,7 +49,7 @@ public class ProductController {
             }
         }
         Product product = mProductRepository.save(input);
-        Inventory inventory = new Inventory(product.getId(), 0);
+        Inventory inventory = new Inventory(product.getId(), 0, 0);
         mInventoryRepository.save(inventory);
         return product;
     }

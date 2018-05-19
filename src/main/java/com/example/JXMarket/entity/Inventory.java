@@ -15,11 +15,19 @@ public class Inventory {
 
     private int productNumber;
 
+    private int productLockNumber;
+
     public Inventory(){}
 
     public Inventory(Long productId, int productNumber) {
         this.productId = productId;
         this.productNumber = productNumber;
+    }
+
+    public Inventory(Long productId, int productNumber, int productLockNumber) {
+        this.productId = productId;
+        this.productNumber = productNumber;
+        this.productLockNumber = productLockNumber;
     }
 
     public Long getId() {
@@ -44,5 +52,13 @@ public class Inventory {
 
     public void setProductNumber(int productNumber) {
         this.productNumber = productNumber;
+    }
+
+    public int getProductLockNumber() {
+        return productLockNumber;
+    }
+
+    public void setProductLockNumber(int productLockNumber) {
+        this.productLockNumber = productLockNumber;
     }
 }
