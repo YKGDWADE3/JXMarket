@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class OrderService implements IOrderService{
@@ -62,7 +63,11 @@ public class OrderService implements IOrderService{
     }
     @Override
     public Order getOrderById(Long id) {
-        return null;
+        Optional<Order> optional = mOrderRepository.findById(id);
+        if (!optional.isPresent()) {
+            throw new NotFoundEx(id);
+        }
+        return optional.get();
     }
 
     @Override
