@@ -17,5 +17,4 @@ public interface IProductService  {
 
     List<Product> getProductByNameAndDesc(String name, String description);
 
-    String deleteProductById(Long id);
 }

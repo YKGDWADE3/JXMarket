@@ -59,10 +59,4 @@ public class ProductController {
         return mProductService.getProductByNameAndDesc(name, description);
     }
 
-    @DeleteMapping(value = "{id}")
-    @ResponseStatus(HttpStatus.OK)
-    String deleteProduct(@PathVariable Long id) {
-        return mProductService.deleteProductById(id);
-    }
-
 }

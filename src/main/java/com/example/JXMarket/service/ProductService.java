@@ -72,15 +72,4 @@ public class ProductService implements IProductService {
     public List<Product> getProductByNameAndDesc(String name, String description) {
         return mProductRepository.findByNameAndDescriptionLike(name, description);
     }
-
-    @Override
-    public String deleteProductById(Long id) {
-        Optional<Product> optional = mProductRepository.findById(id);
-        if (optional.isPresent()) {
-            mProductRepository.deleteById(id);
-            return "delete success";
-        } else {
-            throw new NotFoundEx(id);
-        }
-    }
 }

@@ -1,9 +1,6 @@
 package com.example.JXMarket.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Inventory {
@@ -16,6 +13,10 @@ public class Inventory {
     private int productNumber;
 
     private int productLockNumber;
+
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="id")
+    private Product product;
 
     public Inventory(){}
 
@@ -60,5 +61,13 @@ public class Inventory {
 
     public void setProductLockNumber(int productLockNumber) {
         this.productLockNumber = productLockNumber;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

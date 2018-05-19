@@ -10,4 +10,8 @@ public interface IInventoryService {
     Inventory getInventoryByProductId(Long productId);
 
     List<Inventory> getInventoryList();
+
+    Inventory updateProductLockNumber(Long productId, int lockNumber);
+
+    Inventory saveInventory(Inventory inventory);
 }

@@ -39,4 +39,20 @@ public class InventoryService implements IInventoryService {
     public List<Inventory> getInventoryList() {
         return mInventoryRepository.findAll();
     }
+
+    @Override
+    public Inventory updateProductLockNumber(Long productId, int lockNumber) {
+        Inventory inventory1 = mInventoryRepository.findByProductId(productId);
+        if (inventory1 != null) {
+            inventory1.setProductLockNumber(lockNumber);
+            return mInventoryRepository.save(inventory1);
+        } else {
+            throw new NotFoundEx(productId);
+        }
+    }
+
+    @Override
+    public Inventory saveInventory(Inventory inventory) {
+        return mInventoryRepository.saveAndFlush(inventory);
+    }
 }
