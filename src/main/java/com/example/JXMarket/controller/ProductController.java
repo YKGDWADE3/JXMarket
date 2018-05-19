@@ -6,6 +6,7 @@ import com.example.JXMarket.exception.AlreadyExistEx;
 import com.example.JXMarket.exception.NotFoundEx;
 import com.example.JXMarket.repository.ProductRepository;
 import com.example.JXMarket.repository.InventoryRepository;
+import com.example.JXMarket.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ import java.util.Optional;
 @RequestMapping(value = "/products")
 public class ProductController {
     @Autowired
-    ProductRepository mProductRepository;
+    IProductService mProductService;
 
     @Autowired
     InventoryRepository mInventoryRepository;
@@ -25,73 +26,43 @@ public class ProductController {
     @GetMapping(value = "{id}")
     @ResponseStatus(HttpStatus.OK)
     Product getProductById(@PathVariable long id) {
-        Optional<Product> optional = mProductRepository.findById(id);
-        if (optional.isPresent()) {
-            return optional.get();
-        } else {
-            throw new NotFoundEx(id);
-        }
+        return mProductService.getProductById(id);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     List<Product> getProductList() {
-        return mProductRepository.findAll();
+        return mProductService.getProductList();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     Product createProduct(@RequestBody Product input) {
-        if (input.getId() != null) {
-            Optional<Product> optional = mProductRepository.findById(input.getId());
-            if (optional.isPresent()) {
-                throw new AlreadyExistEx(input.getId());
-            }
-        }
-        Product product = mProductRepository.save(input);
-        Inventory inventory = new Inventory(product.getId(), 0, 0);
-        mInventoryRepository.save(inventory);
-        return product;
+        return mProductService.createProduct(input);
     }
 
     @PutMapping(value = "{id}")
     @ResponseStatus(HttpStatus.OK)
     Product putProduct(@PathVariable long id, @RequestBody Product product ) {
-        Optional<Product> byId = mProductRepository.findById(id);
-        if (!byId.isPresent()) {
-
-            throw new NotFoundEx(id);
-        }
-        product.setId(id);
-        return mProductRepository.saveAndFlush(product);
+        return mProductService.updateProduct(id,product);
     }
 
     @GetMapping(value = "name/{name}")
     @ResponseStatus(HttpStatus.OK)
     Product getProductByName(@PathVariable String name) {
-        Product product = mProductRepository.findByName(name);
-        if (product != null) {
-            return product;
-        }
-        throw  new NotFoundEx(name);
+        return mProductService.getProductByName(name);
     }
 
     @GetMapping("name/{name}/description/{description}")
     @ResponseStatus(HttpStatus.OK)
     List<Product> getProductsByNameAndDesc(@PathVariable String name, @PathVariable String description) {
-        return mProductRepository.findByNameAndDescriptionLike(name, description);
+        return mProductService.getProductByNameAndDesc(name, description);
     }
 
     @DeleteMapping(value = "{id}")
     @ResponseStatus(HttpStatus.OK)
     String deleteProduct(@PathVariable Long id) {
-        Optional<Product> optional = mProductRepository.findById(id);
-        if (optional.isPresent()) {
-            mProductRepository.deleteById(id);
-            return "delete success";
-        } else {
-            throw new NotFoundEx(id);
-        }
+        return mProductService.deleteProductById(id);
     }
 
 }
