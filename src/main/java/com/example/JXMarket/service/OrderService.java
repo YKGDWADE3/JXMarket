@@ -100,9 +100,25 @@ public class OrderService implements IOrderService{
             order.setOrderStatus(OrderStatusEnum.WITHDRAW.getOrderStatus());
             order.setWithdrawTime(new Date());
             mOrderRepository.save(order);
-            //修改锁定库存以及库存
-            return mIInventoryService.updateInventories(order.getPurchaseItemList(), false);
+            return GlobalMessage.ORDER_SUCCESS_WITHDRAW + " , " + mIInventoryService.updateInventories(order.getPurchaseItemList(), false);
         }
         return GlobalMessage.ORDER_ERROR_WITHDRAW_STATUS + order.getOrderStatus();
+    }
+
+    @Override
+    public String signOrder(Long id) {
+        Order order = getOrderById(id);
+        if (OrderStatusEnum.PAID.getOrderStatus().equals(order.getOrderStatus())) {
+            order.setOrderStatus(OrderStatusEnum.SIGNED.getOrderStatus());
+            order.setSignTime(new Date());
+            mOrderRepository.save(order);
+            mIDeliveryInfoService.signedDelivery(order.getDeliveryInfo());
+            return GlobalMessage.ORDER_SUCCESS_SIGN + " , "
+                    + mIDeliveryInfoService.signedDelivery(order.getDeliveryInfo()) + " , "
+                    + mIInventoryService.updateInventories(order.getPurchaseItemList(), true);
+
+
+        }
+        return GlobalMessage.ORDER_ERROR_SIGN_STATUS + order.getOrderStatus();
     }
 }

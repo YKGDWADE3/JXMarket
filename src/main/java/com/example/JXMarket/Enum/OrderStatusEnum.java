@@ -8,7 +8,7 @@ public enum OrderStatusEnum{
     UNPAID("unpaid", 1),
     PAID("paid", 2),
     WITHDRAW("withdraw", 3),
-    FINISH("finish", 4),
+    SIGNED("signed", 4),
     UNKNOWN("未知", 5),
     ;
     private String orderStatus;

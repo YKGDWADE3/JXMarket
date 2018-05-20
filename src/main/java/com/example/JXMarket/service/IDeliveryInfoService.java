@@ -8,7 +8,7 @@ public interface IDeliveryInfoService {
 
     String outboundDelivery(Long id);
 
-    String signedDelivery(Long id);
+    String signedDelivery(DeliveryInfo deliveryInfo);
 
     DeliveryInfo getDeliveryInfoById(Long id);
 }

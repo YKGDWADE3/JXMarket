@@ -35,6 +35,11 @@ public class OrderController {
         return mIOrderService.withdrawOrder(id);
     }
 
+    @PutMapping(value = "{id}/signed")
+    @ResponseStatus(HttpStatus.OK)
+    String signOrder(@PathVariable Long id) {
+        return mIOrderService.signOrder(id);
+    }
     @GetMapping(value = "{id}")
     @ResponseStatus(HttpStatus.OK)
     Order getOrderById(@PathVariable Long id) {

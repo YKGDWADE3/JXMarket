@@ -20,6 +20,6 @@ public class OrderItemService implements IOrderItemService{
             orderItem.setOrderId(orderId);
             mOrderItemRepository.save(orderItem);
         }
-        return GlobalMessage.ORDERITEM_SUCCESS_CREATE;
+        return GlobalMessage.ORDER_ITEM_SUCCESS_CREATE;
     }
 }

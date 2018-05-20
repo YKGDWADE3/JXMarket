@@ -1,5 +1,6 @@
 package com.example.JXMarket.service;
 
+import com.example.JXMarket.Enum.DeliveryStatusEnum;
 import com.example.JXMarket.entity.DeliveryInfo;
 import com.example.JXMarket.exception.NotFoundEx;
 import com.example.JXMarket.instance.GlobalMessage;
@@ -7,6 +8,7 @@ import com.example.JXMarket.repository.DeliveryInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Component
@@ -26,8 +28,11 @@ public class DeliveryInfoService implements IDeliveryInfoService {
     }
 
     @Override
-    public String signedDelivery(Long id) {
-        return null;
+    public String signedDelivery(DeliveryInfo deliveryInfo) {
+        deliveryInfo.setLogisticsStatus(DeliveryStatusEnum.SIGNED.getDeliveryStatus());
+        deliveryInfo.setSignedTime(new Date());
+        mDeliveryInfoRepository.save(deliveryInfo);
+        return GlobalMessage.DELIVERY_SUCCESS_SIGN;
     }
 
     @Override

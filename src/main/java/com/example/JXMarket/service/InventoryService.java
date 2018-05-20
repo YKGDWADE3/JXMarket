@@ -53,7 +53,7 @@ public class InventoryService implements IInventoryService {
             Inventory inventory = getInventoryByProductId(orderItem.getProductId());
             inventory.setProductLockNumber(inventory.getProductLockNumber() - orderItem.getPurchaseCount());
             inventory.setProductNumber(isSigned ? inventory.getProductNumber() - orderItem.getPurchaseCount()
-                    :inventory.getProductNumber() + orderItem.getPurchaseCount());
+                    :inventory.getProductNumber());
             saveInventory(inventory);
         }
         return isSigned ? GlobalMessage.INVENTORY_SUCCESS_UPDATE_WHEN_ORDER_SIGNED

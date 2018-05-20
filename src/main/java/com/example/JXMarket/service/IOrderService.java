@@ -13,4 +13,6 @@ public interface IOrderService {
     String payOrder(Long id);
 
     String withdrawOrder(Long id);
+
+    String signOrder(Long id);
 }

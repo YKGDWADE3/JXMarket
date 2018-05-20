@@ -19,6 +19,8 @@ public class Order {
 
     private Date withdrawTime;
 
+    private Date signTime;
+
     private Long userId;
 
     private Double totalPrice;
@@ -105,5 +107,13 @@ public class Order {
 
     public void setDeliveryInfo(DeliveryInfo deliveryInfo) {
         this.deliveryInfo = deliveryInfo;
+    }
+
+    public Date getSignTime() {
+        return signTime;
+    }
+
+    public void setSignTime(Date signTime) {
+        this.signTime = signTime;
     }
 }
