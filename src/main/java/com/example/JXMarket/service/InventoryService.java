@@ -1,6 +1,7 @@
 package com.example.JXMarket.service;
 
 import com.example.JXMarket.entity.Inventory;
+import com.example.JXMarket.entity.OrderItem;
 import com.example.JXMarket.exception.NotFoundEx;
 import com.example.JXMarket.repository.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,16 @@ public class InventoryService implements IInventoryService {
     @Override
     public Inventory saveInventory(Inventory inventory) {
         return mInventoryRepository.saveAndFlush(inventory);
+    }
+
+    @Override
+    public String updateInventories(List<OrderItem> orderItems) {
+        for (OrderItem orderItem: orderItems) {
+            Inventory inventory = getInventoryByProductId(orderItem.getProductId());
+            inventory.setProductLockNumber(inventory.getProductLockNumber() - orderItem.getPurchaseCount());
+            inventory.setProductNumber(inventory.getProductNumber() - orderItem.getPurchaseCount());
+            saveInventory(inventory);
+        }
+        return "update inventories success";
     }
 }

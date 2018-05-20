@@ -15,7 +15,7 @@ public class Inventory {
     private int productLockNumber;
 
     @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="id")
+    @JoinColumn(name="productId",insertable = false,updatable = false)
     private Product product;
 
     public Inventory(){}

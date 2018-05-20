@@ -1,10 +1,11 @@
 package com.example.JXMarket.service;
 
+import com.example.JXMarket.Enum.DeliveryStatusEnum;
 import com.example.JXMarket.Enum.OrderStatusEnum;
+import com.example.JXMarket.entity.DeliveryInfo;
 import com.example.JXMarket.entity.Inventory;
 import com.example.JXMarket.entity.Order;
 import com.example.JXMarket.entity.OrderItem;
-import com.example.JXMarket.entity.Product;
 import com.example.JXMarket.exception.NotEnoughEx;
 import com.example.JXMarket.exception.NotFoundEx;
 import com.example.JXMarket.repository.OrderRepository;
@@ -24,7 +25,10 @@ public class OrderService implements IOrderService{
     IInventoryService mIInventoryService;
 
     @Autowired
-    OrderItemService mOrderItemService;
+    IOrderItemService mOrderItemService;
+
+    @Autowired
+    IDeliveryInfoService mIDeliveryInfoService;
 
     @Override
     public String createOrder(List<OrderItem> orderItems) {
@@ -72,11 +76,34 @@ public class OrderService implements IOrderService{
 
     @Override
     public String payOrder(Long id) {
-        return null;
+        Order order = getOrderById(id);
+        if (OrderStatusEnum.UNPAID.getOrderStatus().equals(order.getOrderStatus())) {
+            order.setOrderStatus(OrderStatusEnum.PAID.getOrderStatus());
+            order.setPaidTime(new Date());
+            mOrderRepository.save(order);
+            //修改锁定库存以及库存
+            mIInventoryService.updateInventories(order.getPurchaseItemList());
+            //新增运送记录
+            DeliveryInfo deliveryInfo = new DeliveryInfo();
+            deliveryInfo.setCreateTime(new Date());
+            deliveryInfo.setOrderId(order.getId());
+            deliveryInfo.setLogisticsStatus(DeliveryStatusEnum.CREATE.getDeliveryStatus());
+            mIDeliveryInfoService.createDelivery(deliveryInfo);
+            return "pay order success";
+        }
+        return "pay fail";
+
     }
 
     @Override
     public String withdrawOrder(Long id) {
-        return null;
+        Order order = getOrderById(id);
+        if (OrderStatusEnum.UNPAID.getOrderStatus().equals(order.getOrderStatus())) {
+            order.setOrderStatus(OrderStatusEnum.WITHDRAW.getOrderStatus());
+            order.setWithdrawTime(new Date());
+            mOrderRepository.save(order);
+            return "withdraw success";
+        }
+        return "withdraw fail";
     }
 }

@@ -15,6 +15,10 @@ public class Order {
 
     private Date createTime;
 
+    private Date paidTime;
+
+    private Date withdrawTime;
+
     private Long userId;
 
     private Double totalPrice;
@@ -23,8 +27,8 @@ public class Order {
     @JoinColumn(name = "orderId")
     private List<OrderItem> purchaseItemList;
 
-    @OneToOne
-    @JoinColumn(name = "id")
+
+    @OneToOne(fetch = FetchType.EAGER, cascade =  CascadeType.REMOVE, mappedBy = "order")
     private DeliveryInfo deliveryInfo;
 
 
@@ -76,6 +80,23 @@ public class Order {
 
     public void setPurchaseItemList(List<OrderItem> purchaseItemList) {
         this.purchaseItemList = purchaseItemList;
+    }
+
+
+    public Date getPaidTime() {
+        return paidTime;
+    }
+
+    public void setPaidTime(Date paidTime) {
+        this.paidTime = paidTime;
+    }
+
+    public Date getWithdrawTime() {
+        return withdrawTime;
+    }
+
+    public void setWithdrawTime(Date withdrawTime) {
+        this.withdrawTime = withdrawTime;
     }
 
     public DeliveryInfo getDeliveryInfo() {

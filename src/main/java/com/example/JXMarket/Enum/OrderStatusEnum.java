@@ -28,9 +28,9 @@ public enum OrderStatusEnum{
         return statusId;
     }
 
-    public static OrderStatusEnum resolve(String courseName) {
-        if (INSTANCE.containsKey(courseName)) {
-            return INSTANCE.get(courseName);
+    public static OrderStatusEnum resolve(String orderStatus) {
+        if (INSTANCE.containsKey(orderStatus)) {
+            return INSTANCE.get(orderStatus);
         }
         return OrderStatusEnum.UNKNOWN;
     }
