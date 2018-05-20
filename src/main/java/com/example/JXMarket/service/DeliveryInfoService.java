@@ -24,7 +24,11 @@ public class DeliveryInfoService implements IDeliveryInfoService {
 
     @Override
     public String outboundDelivery(Long id) {
-        return null;
+        DeliveryInfo deliveryInfo = getDeliveryInfoById(id);
+        deliveryInfo.setLogisticsStatus(DeliveryStatusEnum.OUTBOUND.getDeliveryStatus());
+        deliveryInfo.setOutboundTime(new Date());
+        mDeliveryInfoRepository.save(deliveryInfo);
+        return GlobalMessage.DELIVERY_SUCCESS_OUTBOUND;
     }
 
     @Override

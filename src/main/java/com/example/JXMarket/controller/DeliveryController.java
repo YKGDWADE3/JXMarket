@@ -17,4 +17,10 @@ public class DeliveryController {
     DeliveryInfo getDeliveryInfoById(@PathVariable Long id) {
         return mIDeliveryInfoService.getDeliveryInfoById(id);
     }
+
+    @PutMapping(value = "{id}/outbound")
+    @ResponseStatus(HttpStatus.OK)
+    String outBoundDelivery(@PathVariable Long id) {
+        return mIDeliveryInfoService.outboundDelivery(id);
+    }
 }
