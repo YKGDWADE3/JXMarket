@@ -3,6 +3,7 @@ package com.example.JXMarket.service;
 import com.example.JXMarket.entity.Inventory;
 import com.example.JXMarket.entity.OrderItem;
 import com.example.JXMarket.exception.NotFoundEx;
+import com.example.JXMarket.instance.GlobalMessage;
 import com.example.JXMarket.repository.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -55,6 +56,7 @@ public class InventoryService implements IInventoryService {
                     :inventory.getProductNumber() + orderItem.getPurchaseCount());
             saveInventory(inventory);
         }
-        return isSigned ? "signed inventories success" : "withdraw inventories success";
+        return isSigned ? GlobalMessage.INVENTORY_SUCCESS_UPDATE_WHEN_ORDER_SIGNED
+                : GlobalMessage.INVENTORY_SUCCESS_UPDATE_WHEN_ORDER_WITHDRAW;
     }
 }

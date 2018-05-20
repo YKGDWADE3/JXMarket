@@ -1,6 +1,7 @@
 package com.example.JXMarket.service;
 
 import com.example.JXMarket.entity.OrderItem;
+import com.example.JXMarket.instance.GlobalMessage;
 import com.example.JXMarket.repository.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,6 @@ public class OrderItemService implements IOrderItemService{
             orderItem.setOrderId(orderId);
             mOrderItemRepository.save(orderItem);
         }
-        return "create orderItem success";
+        return GlobalMessage.ORDERITEM_SUCCESS_CREATE;
     }
 }

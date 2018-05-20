@@ -8,6 +8,7 @@ import com.example.JXMarket.entity.Order;
 import com.example.JXMarket.entity.OrderItem;
 import com.example.JXMarket.exception.NotEnoughEx;
 import com.example.JXMarket.exception.NotFoundEx;
+import com.example.JXMarket.instance.GlobalMessage;
 import com.example.JXMarket.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,7 +41,7 @@ public class OrderService implements IOrderService{
         order.setOrderStatus(OrderStatusEnum.UNPAID.getOrderStatus());
         Order order1 = mOrderRepository.saveAndFlush(order);
         mOrderItemService.createOrderItem(orderItems, order1.getId());
-        return "create order success";
+        return GlobalMessage.ORDER_SUCCESS_CREATE;
     }
 
     public double checkInventoryAndUpdate(List<OrderItem> orderItems) {
@@ -86,9 +87,9 @@ public class OrderService implements IOrderService{
             deliveryInfo.setCreateTime(new Date());
             deliveryInfo.setOrderId(order.getId());
             deliveryInfo.setLogisticsStatus(DeliveryStatusEnum.CREATE.getDeliveryStatus());
-            return mIDeliveryInfoService.createDelivery(deliveryInfo);
+            return GlobalMessage.ORDER_SUCCESS_PAY + ", " + mIDeliveryInfoService.createDelivery(deliveryInfo);
         }
-        return "order cannot pay because status is " + order.getOrderStatus();
+        return GlobalMessage.ORDER_ERROR_PAY_STATUS + order.getOrderStatus();
 
     }
 
@@ -102,6 +103,6 @@ public class OrderService implements IOrderService{
             //修改锁定库存以及库存
             return mIInventoryService.updateInventories(order.getPurchaseItemList(), false);
         }
-        return "order cannot withdraw because status is " + order.getOrderStatus();
+        return GlobalMessage.ORDER_ERROR_WITHDRAW_STATUS + order.getOrderStatus();
     }
 }

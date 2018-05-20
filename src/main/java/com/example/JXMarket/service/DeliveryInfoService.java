@@ -2,6 +2,7 @@ package com.example.JXMarket.service;
 
 import com.example.JXMarket.entity.DeliveryInfo;
 import com.example.JXMarket.exception.NotFoundEx;
+import com.example.JXMarket.instance.GlobalMessage;
 import com.example.JXMarket.repository.DeliveryInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ public class DeliveryInfoService implements IDeliveryInfoService {
     @Override
     public String createDelivery(DeliveryInfo deliveryInfo) {
         mDeliveryInfoRepository.saveAndFlush(deliveryInfo);
-        return "create order and deliveryInfo success";
+        return GlobalMessage.DELIVERY_SUCCESS_CREATE;
     }
 
     @Override
