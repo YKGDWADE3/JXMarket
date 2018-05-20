@@ -12,9 +12,7 @@ public interface IInventoryService {
 
     List<Inventory> getInventoryList();
 
-    Inventory updateProductLockNumber(Long productId, int lockNumber);
-
     Inventory saveInventory(Inventory inventory);
 
-    String updateInventories(List<OrderItem> orderItems);
+    String updateInventories(List<OrderItem> orderItems, boolean isSigned);
 }

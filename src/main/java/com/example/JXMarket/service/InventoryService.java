@@ -42,29 +42,19 @@ public class InventoryService implements IInventoryService {
     }
 
     @Override
-    public Inventory updateProductLockNumber(Long productId, int lockNumber) {
-        Inventory inventory1 = mInventoryRepository.findByProductId(productId);
-        if (inventory1 != null) {
-            inventory1.setProductLockNumber(lockNumber);
-            return mInventoryRepository.save(inventory1);
-        } else {
-            throw new NotFoundEx(productId);
-        }
-    }
-
-    @Override
     public Inventory saveInventory(Inventory inventory) {
         return mInventoryRepository.saveAndFlush(inventory);
     }
 
     @Override
-    public String updateInventories(List<OrderItem> orderItems) {
+    public String updateInventories(List<OrderItem> orderItems,boolean isSigned) {
         for (OrderItem orderItem: orderItems) {
             Inventory inventory = getInventoryByProductId(orderItem.getProductId());
             inventory.setProductLockNumber(inventory.getProductLockNumber() - orderItem.getPurchaseCount());
-            inventory.setProductNumber(inventory.getProductNumber() - orderItem.getPurchaseCount());
+            inventory.setProductNumber(isSigned ? inventory.getProductNumber() - orderItem.getPurchaseCount()
+                    :inventory.getProductNumber() + orderItem.getPurchaseCount());
             saveInventory(inventory);
         }
-        return "update inventories success";
+        return isSigned ? "signed inventories success" : "withdraw inventories success";
     }
 }

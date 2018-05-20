@@ -81,17 +81,14 @@ public class OrderService implements IOrderService{
             order.setOrderStatus(OrderStatusEnum.PAID.getOrderStatus());
             order.setPaidTime(new Date());
             mOrderRepository.save(order);
-            //修改锁定库存以及库存
-            mIInventoryService.updateInventories(order.getPurchaseItemList());
             //新增运送记录
             DeliveryInfo deliveryInfo = new DeliveryInfo();
             deliveryInfo.setCreateTime(new Date());
             deliveryInfo.setOrderId(order.getId());
             deliveryInfo.setLogisticsStatus(DeliveryStatusEnum.CREATE.getDeliveryStatus());
-            mIDeliveryInfoService.createDelivery(deliveryInfo);
-            return "pay order success";
+            return mIDeliveryInfoService.createDelivery(deliveryInfo);
         }
-        return "pay fail";
+        return "order cannot pay because status is " + order.getOrderStatus();
 
     }
 
@@ -102,8 +99,9 @@ public class OrderService implements IOrderService{
             order.setOrderStatus(OrderStatusEnum.WITHDRAW.getOrderStatus());
             order.setWithdrawTime(new Date());
             mOrderRepository.save(order);
-            return "withdraw success";
+            //修改锁定库存以及库存
+            return mIInventoryService.updateInventories(order.getPurchaseItemList(), false);
         }
-        return "withdraw fail";
+        return "order cannot withdraw because status is " + order.getOrderStatus();
     }
 }

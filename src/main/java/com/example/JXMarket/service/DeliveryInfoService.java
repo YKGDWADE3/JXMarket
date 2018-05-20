@@ -16,7 +16,7 @@ public class DeliveryInfoService implements IDeliveryInfoService {
     @Override
     public String createDelivery(DeliveryInfo deliveryInfo) {
         mDeliveryInfoRepository.saveAndFlush(deliveryInfo);
-        return "create deliveryInfo success";
+        return "create order and deliveryInfo success";
     }
 
     @Override

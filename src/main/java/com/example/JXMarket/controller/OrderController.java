@@ -31,7 +31,7 @@ public class OrderController {
 
     @PutMapping(value = "{id}/withdraw")
     @ResponseStatus(HttpStatus.OK)
-    String withdrawOrder(Long id) {
+    String withdrawOrder(@PathVariable Long id) {
         return mIOrderService.withdrawOrder(id);
     }
 
