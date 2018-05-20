@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/logisticsRecords")
+@RequestMapping(value = "/deliveryInfos")
 public class DeliveryController {
     @Autowired
     IDeliveryInfoService mIDeliveryInfoService;

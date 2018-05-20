@@ -18,6 +18,7 @@ public class GlobalMessage {
     public static final String DELIVERY_SUCCESS_CREATE = "create deliveryInfo success";
     public static final String DELIVERY_SUCCESS_SIGN = "sign deliveryInfo success";
     public static final String DELIVERY_SUCCESS_OUTBOUND = "outbound delivery success";
+    public static final String DELIVERY_ERROR_OUTBOUND = "outbound delivery fail because status is ";
 
     //inventory
     public static final String INVENTORY_SUCCESS_UPDATE_WHEN_ORDER_WITHDRAW = "update inventory success when order withdraw";

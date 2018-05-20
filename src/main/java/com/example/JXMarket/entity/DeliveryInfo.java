@@ -18,7 +18,7 @@ public class DeliveryInfo {
 
     private Date signedTime;
 
-    private String logisticsStatus;
+    private String deliveryStatus;
 
     @OneToOne(targetEntity = Order.class)
     @JoinColumn(name="orderId",insertable = false, updatable = false)
@@ -64,12 +64,12 @@ public class DeliveryInfo {
         this.signedTime = signedTime;
     }
 
-    public String getLogisticsStatus() {
-        return logisticsStatus;
+    public String getDeliveryStatus() {
+        return deliveryStatus;
     }
 
-    public void setLogisticsStatus(String logisticsStatus) {
-        this.logisticsStatus = logisticsStatus;
+    public void setDeliveryStatus(String deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
     }
 
     public Long getOrderId() {

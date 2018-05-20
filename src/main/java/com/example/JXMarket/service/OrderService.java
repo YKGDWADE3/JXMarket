@@ -86,7 +86,7 @@ public class OrderService implements IOrderService{
             DeliveryInfo deliveryInfo = new DeliveryInfo();
             deliveryInfo.setCreateTime(new Date());
             deliveryInfo.setOrderId(order.getId());
-            deliveryInfo.setLogisticsStatus(DeliveryStatusEnum.CREATE.getDeliveryStatus());
+            deliveryInfo.setDeliveryStatus(DeliveryStatusEnum.CREATE.getDeliveryStatus());
             return GlobalMessage.ORDER_SUCCESS_PAY + ", " + mIDeliveryInfoService.createDelivery(deliveryInfo);
         }
         return GlobalMessage.ORDER_ERROR_PAY_STATUS + order.getOrderStatus();

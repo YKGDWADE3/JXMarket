@@ -25,15 +25,19 @@ public class DeliveryInfoService implements IDeliveryInfoService {
     @Override
     public String outboundDelivery(Long id) {
         DeliveryInfo deliveryInfo = getDeliveryInfoById(id);
-        deliveryInfo.setLogisticsStatus(DeliveryStatusEnum.OUTBOUND.getDeliveryStatus());
-        deliveryInfo.setOutboundTime(new Date());
-        mDeliveryInfoRepository.save(deliveryInfo);
-        return GlobalMessage.DELIVERY_SUCCESS_OUTBOUND;
+        if (DeliveryStatusEnum.CREATE.getDeliveryStatus().equals(deliveryInfo.getDeliveryStatus())) {
+            deliveryInfo.setDeliveryStatus(DeliveryStatusEnum.OUTBOUND.getDeliveryStatus());
+            deliveryInfo.setOutboundTime(new Date());
+            mDeliveryInfoRepository.save(deliveryInfo);
+            return GlobalMessage.DELIVERY_SUCCESS_OUTBOUND;
+        }
+        return GlobalMessage.DELIVERY_ERROR_OUTBOUND + deliveryInfo.getDeliveryStatus();
+
     }
 
     @Override
     public String signedDelivery(DeliveryInfo deliveryInfo) {
-        deliveryInfo.setLogisticsStatus(DeliveryStatusEnum.SIGNED.getDeliveryStatus());
+        deliveryInfo.setDeliveryStatus(DeliveryStatusEnum.SIGNED.getDeliveryStatus());
         deliveryInfo.setSignedTime(new Date());
         mDeliveryInfoRepository.save(deliveryInfo);
         return GlobalMessage.DELIVERY_SUCCESS_SIGN;
